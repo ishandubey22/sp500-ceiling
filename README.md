@@ -210,7 +210,9 @@ This pipeline consolidates and supersedes five earlier files:
 - `recover_terminal_prices.py` — Alpha Vantage + manual injection
 - `backtest_pro.py` — IS/OOS backtest with FF5 regression
 
-The original files used Stooq as the primary recovery source. Stooq geo-blocks requests from parts of Asia; the waterfall returned 0/172 tickers in the development environment because of captcha. Tiingo replaced it as the recovery source because it has an authenticated API that explicitly supports delisted history.
+The original files used Stooq as the primary recovery source. Stooq geo-blocks requests from parts of Asia; the waterfall returned 0/172 tickers in the development environment because of captcha. Tiingo replaced it as the recovery source because it has an authenticated API that explicitly supports delisted history. 
+
+I am not touching this codebase for a decent while now. Enjoy! ;)
 
 ---
 
