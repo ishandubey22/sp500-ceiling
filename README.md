@@ -192,7 +192,7 @@ python sp500_ceiling.py --dry-run
 
 **Pre-2007 membership accuracy is lower.** The Wikipedia article's `id="constituents"` table format only reliably parses back to 2007. Before that, the fja05680 dataset provides monthly snapshots, but its pre-2005 coverage is also limited by the data it was compiled from.
 
-**EDGAR terminal prices recover 0 for this run.**The EDGAR module currently recovers zero prices because the regex patterns require explicit cash‑deal language, and the SEC's EFTS full‑text search sometimes returns filing summaries rather than the full primary‑document text where the per‑share consideration would appear. This is a data‑access limitation, not a code error; future work mighg use the EDGAR XBRL structured data API instead.
+**EDGAR terminal prices recover 0 for this run.** The EDGAR module currently recovers zero prices because the regex patterns require explicit cash‑deal language, and the SEC's EFTS full‑text search sometimes returns filing summaries rather than the full primary‑document text where the per‑share consideration would appear. This is a data‑access limitation, not a code error; future work mighg use the EDGAR XBRL structured data API instead.
 
 **Short interest proxy is static.** The cost model uses current Yahoo Finance `shortPercentOfFloat` as a uniform proxy for historical borrow costs. Historical per-ticker monthly short interest requires a paid subscription usually.
 
