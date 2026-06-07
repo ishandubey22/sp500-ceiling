@@ -25,10 +25,9 @@ Most free-data backtests on the S&P 500 are biased in ways that are hard to quan
     OOS Sharpe delta: -0.11
 ```
 
-**The negative sign is not a typo.** Using correct historical membership *improved* the anti-consensus strategy by 1.95 pp annually. Survivorship bias is directional and it inflates naive backtests of long-winners strategies; it deflates naive backtests of fade-the-winner strategies. Measuring the direction is the point.
+**The negative sign is not a typo.** Using correct historical membership *improved* the anti-consensus strategy by 1.95 pp annually. Survivorship bias is directional and it inflates naive backtests of long-winners strategies; it deflates naive backtests of fade-the-winner strategies. Measuring the direction is the point. 
 
-The terminal-return delta is zero because 57% of delisted tickers still lack full price history. That gap is documented, not hidden.
-
+The terminal-return delta is zero because 57% of delisted tickers still lack full price history. That gap is noted here. 
 ---
 
 ## The three bias layers
@@ -78,9 +77,8 @@ Layer 0 re-builds the factor panel with a naive `get_members()` that always retu
 | Tier B — Hedge fund (30 bps RT) | +0.41% |
 | Tier C — Conservative (50 bps RT) | −0.64% |
 
-The strategy is exploratory. It is not the contribution of this project.
+The strategy is exploratory. It is not the contribution of this project. It is directionally correct, but the magnitude is unconfirmed without full data (obviously).
 
----
 
 ## Data completeness (current run)
 
@@ -92,7 +90,7 @@ The strategy is exploratory. It is not the contribution of this project.
 | Terminal prices injected (CURATED_TERMINAL) | 15 |
 | Factor panel coverage | 43% |
 
-The 57% absence rate is the honest ceiling of free-data approaches. The `missing_ticker_registry.csv` output documents every absent ticker with its last-known event type, so the gap is transparent and auditable rather than hidden.
+The 57% absence rate is the honest ceiling of free-data approaches. The `missing_ticker_registry.csv` output documents every absent ticker with its last-known event type, so the gap is transparent and auditable.
 
 ---
 
@@ -194,11 +192,11 @@ python sp500_ceiling.py --dry-run
 
 **Pre-2007 membership accuracy is lower.** The Wikipedia article's `id="constituents"` table format only reliably parses back to 2007. Before that, the fja05680 dataset provides monthly snapshots, but its pre-2005 coverage is also limited by the data it was compiled from.
 
-**EDGAR terminal prices recover 0 for this run.** The EDGAR EFTS search is sensitive to query phrasing and document structure. The regex patterns require explicit cash-deal language; stock-for-stock mergers, CVR payouts, and earnings 8-Ks are intentionally excluded but may miss some valid acquisitions.
+**EDGAR terminal prices recover 0 for this run.**The EDGAR module currently recovers zero prices because the regex patterns require explicit cash‑deal language, and the SEC's EFTS full‑text search sometimes returns filing summaries rather than the full primary‑document text where the per‑share consideration would appear. This is a data‑access limitation, not a code error; future work mighg use the EDGAR XBRL structured data API instead.
 
-**Short interest proxy is static.** The cost model uses current Yahoo Finance `shortPercentOfFloat` as a uniform proxy for historical borrow costs. Historical per-ticker monthly short interest requires a paid subscription (CRSP, S3 Shortsight).
+**Short interest proxy is static.** The cost model uses current Yahoo Finance `shortPercentOfFloat` as a uniform proxy for historical borrow costs. Historical per-ticker monthly short interest requires a paid subscription usually.
 
-**The strategy is not the contribution.** The anti-consensus composite (fade high-momentum, high-vol, high-volume stocks) is presented as a test vehicle. Its OOS Sharpe of 0.26 on a long-short gross basis is modest. Do not use these results to trade.
+**The strategy is not the contribution.** The anti-consensus composite (fade high-momentum, high-vol, high-volume stocks) is presented as a test vehicle. Its OOS Sharpe of 0.26 on a long-short gross basis is modest. Do not use these results to trade. 
 
 ---
 
