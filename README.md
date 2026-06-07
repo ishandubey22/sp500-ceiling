@@ -4,7 +4,6 @@ A single-file pipeline for measuring survivorship bias in S&P 500 factor backtes
 
 Most free-data backtests on the S&P 500 are biased in ways that are hard to quantify: they use today's index composition for all historical dates, silently drop the last monthly return of every delisted stock, and rely on Yahoo Finance which no longer serves most pre-2015 delisted tickers. This project builds the infrastructure to measure each bias layer separately and report the exact CAGR and Sharpe impact.
 
-**The strategy is a vehicle. The contribution is the bias measurement framework.**
 
 ---
 
@@ -26,7 +25,7 @@ Most free-data backtests on the S&P 500 are biased in ways that are hard to quan
     OOS Sharpe delta: -0.11
 ```
 
-**The negative sign is not a typo.** Using correct historical membership *improved* the anti-consensus strategy by 1.95 pp annually. Survivorship bias is directional — it inflates naive backtests of long-winners strategies; it deflates naive backtests of fade-the-winner strategies. Measuring the direction is the point.
+**The negative sign is not a typo.** Using correct historical membership *improved* the anti-consensus strategy by 1.95 pp annually. Survivorship bias is directional and it inflates naive backtests of long-winners strategies; it deflates naive backtests of fade-the-winner strategies. Measuring the direction is the point.
 
 The terminal-return delta is zero because 57% of delisted tickers still lack full price history. That gap is documented, not hidden.
 
@@ -62,7 +61,7 @@ For acquisition targets still missing price history, the pipeline queries the ED
 Maps retired ticker symbols to their current equivalents for same-entity renames only. Acquisitions and mergers are handled via terminal price injection rather than ticker substitution to avoid mixing company histories. Enabled with `--openfigi`.
 
 ### Bias layer quantification
-Layer 0 re-builds the factor panel with a naive `get_members()` that always returns today's 500 tickers, so factor values (momentum, volatility) themselves reflect the naïve analyst's universe — not just the membership filter applied after the fact. This correctly captures the full scope of static-membership bias.
+Layer 0 re-builds the factor panel with a naive `get_members()` that always returns today's 500 tickers, so factor values (momentum, volatility) themselves reflect the naïve analyst's universe and not just the membership filter applied after the fact. This correctly captures the full scope of static-membership bias.
 
 ---
 
@@ -191,7 +190,7 @@ python sp500_ceiling.py --dry-run
 
 ## Known limitations and honest caveats
 
-**57% of historical tickers are absent from the factor panel.** The absent tickers are disproportionately bankruptcies, distressed delistings, and pre-2010 acquisitions — exactly the stocks with the most negative terminal returns. The measured bias delta is a lower bound on the true survivorship bias.
+**57% of historical tickers are absent from the factor panel.** The absent tickers are disproportionately bankruptcies, distressed delistings, and pre-2010 acquisitions which are exactly the stocks with the most negative terminal returns. The measured bias delta is a lower bound on the true survivorship bias.
 
 **Pre-2007 membership accuracy is lower.** The Wikipedia article's `id="constituents"` table format only reliably parses back to 2007. Before that, the fja05680 dataset provides monthly snapshots, but its pre-2005 coverage is also limited by the data it was compiled from.
 
@@ -213,7 +212,7 @@ This pipeline consolidates and supersedes five earlier files:
 - `recover_terminal_prices.py` — Alpha Vantage + manual injection
 - `backtest_pro.py` — IS/OOS backtest with FF5 regression
 
-The original files used Stooq as the primary recovery source. Stooq geo-blocks requests from parts of Asia; the waterfall returned 0/172 tickers in the development environment. Tiingo replaced it as the recovery source because it has an authenticated API that explicitly supports delisted history.
+The original files used Stooq as the primary recovery source. Stooq geo-blocks requests from parts of Asia; the waterfall returned 0/172 tickers in the development environment because of captcha. Tiingo replaced it as the recovery source because it has an authenticated API that explicitly supports delisted history.
 
 ---
 
